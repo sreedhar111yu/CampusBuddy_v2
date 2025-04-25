@@ -1,8 +1,19 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { Home, Phone, Search, User, Gift } from "lucide-react";
+import { Home, Phone, Search, User, Gift, LogOut } from "lucide-react";
+import axios from 'axios';
 
 function Sidebar_Aspirants() {
+
+  const handleLogout = () => {
+    axios
+      .get('http://localhost:5000/logout', { withCredentials: true })
+      .then(() => {
+        window.location.href = '/';
+      })
+      .catch(err => console.error('Logout failed:', err));
+  };
+
   return (
     <>
       <div className="w-64 fixed top-0 left-0 h-screen bg-black p-4 border-r text-white z-50">
@@ -53,6 +64,12 @@ function Sidebar_Aspirants() {
             <Gift size={20} />
             Rewards
           </Link>
+          <button onClick={handleLogout}
+          className='flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 text-red-500'
+          > 
+            <LogOut size={20} />
+            Logout
+          </button>
         </div>
         
 

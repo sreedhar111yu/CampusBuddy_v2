@@ -8,7 +8,7 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).json({ isAuthenticated: false, message: 'User not authenticated' });
 }
 
-// ✅ POST: Create Student (if needed manually)
+//  POST: Create Student (if needed manually)
 router.post('/', async (req, res) => {
   try {
     const student = await Student.create(req.body);
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ PUT: Update Student Info
+// PUT: Update Student Info
 router.put('/:id', ensureAuthenticated, async (req, res) => {
   try {
     const updatedStudent = await Student.findByIdAndUpdate(

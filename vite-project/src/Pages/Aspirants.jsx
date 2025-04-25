@@ -16,16 +16,7 @@ function Aspirants() {
       });
   }, []);
 
-  // Logout handler using axios
-  const handleLogout = () => {
-    axios
-      .get('http://localhost:5000/logout', { withCredentials: true })
-      .then(() => {
-        window.location.href = '/';
-      })
-      .catch(err => console.error('Logout failed:', err));
-  };
-
+  
   if (!profile) return <div>Loading...</div>;
 
   return (
@@ -34,19 +25,13 @@ function Aspirants() {
         <Sidebar_Aspirants />
       </div>
       <div className='md:ml-64 p-4'>
-        <h1 className="text-2xl font-semibold mb-4">Aspirants Dashboard</h1>
-        <h2 className="text-xl font-bold mb-2">Welcome, {profile.name}</h2>
+        <h2 className="text-2xl font-bold mb-2">Welcome 🎓, {profile.name}</h2>
         <p>Email: {profile.email}</p>
         <p>College: {profile.college || "N/A"}</p>
         <p>Interests: {profile.interests?.join(', ')}</p>
         <p>Insights: {profile.insights}</p>
 
-        <button
-          onClick={handleLogout}
-          className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
+        
       </div>
     </>
   );
