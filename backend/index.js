@@ -8,6 +8,9 @@ const passport = require('passport');
 require('./middlewares/passportConfig');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const menteesRoutes = require('./routes/menteesRoutes')
+const studentAuthRoutes = require('./routes/studentAuthRoutes')
+const menteesAuthRoutes =require('./routes/menteesAuthRoutes')
 
 dotenv.config();
 connectDB();
@@ -47,45 +50,14 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// Google OAuth login and callback
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'],
-     prompt: 'select_account'
-   })
-);
-
-app.get('/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/',
-  }),
-  (req, res) => {
-    console.log('✅ Authenticated session user:', req.user);
-    res.redirect('http://localhost:5173/dashboard/aspirants');
-  }
-);
-
-// Logout
-app.get('/logout', (req, res, next) => {
-  console.log('Logging out user:', req.user); // debug
-  req.logout(function (err) {
-    if (err) return next(err);
-
-    req.session.destroy(function (err) {
-      if (err) return next(err);
-
-      res.clearCookie('connect.sid');
-      return res.status(200).json({ message: 'Logged out' });
-    });
-  });
-});
 
 
-// Auth test route
-app.get("/check-auth", (req, res) => {
-  res.json({ user: req.user || null, session: req.session });
-});
-
+app.use('/auth/student', studentAuthRoutes);
+app.use('/auth/mentee', menteesAuthRoutes);
 app.use("/api/students", studentRoutes);
+// app.use('/api/mentees', menteesRoutes);
+
+
 
 // Socket.IO logic
 io.on('connection', (socket) => {

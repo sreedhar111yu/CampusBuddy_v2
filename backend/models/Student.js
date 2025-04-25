@@ -9,6 +9,7 @@ const studentSchema = new mongoose.Schema({
   phone: { type: String },
   email: { type: String, required: true, unique: true },
   graduationYear: { type: String },
+  
 });
 
 module.exports = mongoose.model('Student', studentSchema);

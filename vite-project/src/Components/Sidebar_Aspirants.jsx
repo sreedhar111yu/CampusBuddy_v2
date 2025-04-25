@@ -7,7 +7,7 @@ function Sidebar_Aspirants() {
 
   const handleLogout = () => {
     axios
-      .get('http://localhost:5000/logout', { withCredentials: true })
+      .get('http://localhost:5000/auth/student/logout', { withCredentials: true })
       .then(() => {
         window.location.href = '/';
       })
