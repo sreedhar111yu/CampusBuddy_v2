@@ -8,30 +8,43 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await Student.findById(id);
-  console.log("👤 Deserialized user:", user); // Add this
-  done(null, user);
+  try {
+    const user = await Student.findById(id);
+    console.log("👤 Deserialized user:", user);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
-
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
-  console.log("✅ Google Profile:", profile); // <== Add this
+  try {
+    console.log("✅ Google Profile:", profile);
 
-  let existingUser = await Student.findOne({ email: profile.emails[0].value });
-  if (existingUser) return done(null, existingUser);
+    const email = profile.emails[0].value;
+    let existingUser = await Student.findOne({ email });
 
-  const newUser = new Student({
-    name: profile.displayName,
-    email: profile.emails[0].value,
-    role: 'studying'
-  });
+    if (existingUser) return done(null, existingUser);
 
-  await newUser.save();
-  return done(null, newUser);
+    // Split full name into firstName and lastName
+    const fullName = profile.displayName.split(' '); // naive split
+const firstName = fullName[0];
+const lastName = fullName.slice(1).join(' '); // handles middle names too
+
+const newUser = new Student({
+  firstName: firstName,
+  lastName: lastName,
+  email: profile.emails[0].value,
+});
+    await newUser.save();
+    return done(null, newUser);
+  } catch (error) {
+    return done(error, null);
+  }
 }));
 
 module.exports = passport;

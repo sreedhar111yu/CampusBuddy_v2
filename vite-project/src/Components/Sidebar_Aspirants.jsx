@@ -65,7 +65,7 @@ function Sidebar_Aspirants() {
             Rewards
           </Link>
           <button onClick={handleLogout}
-          className='flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 text-red-500'
+          className='flex w-full items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 text-red-500'
           > 
             <LogOut size={20} />
             Logout

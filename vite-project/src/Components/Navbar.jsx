@@ -65,13 +65,13 @@ const Navbar = () => {
       window.location.href = 'http://localhost:5000/auth/google';
     }
   }}
-  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+  className='w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
 >
   Aspirants
 </button>
             <a
               href="/dashboard/mentees"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="w-full text-center block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               Mentees
             </a>

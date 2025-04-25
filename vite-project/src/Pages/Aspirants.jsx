@@ -25,12 +25,9 @@ function Aspirants() {
         <Sidebar_Aspirants />
       </div>
       <div className='md:ml-64 p-4'>
-        <h2 className="text-2xl font-bold mb-2">Welcome 🎓, {profile.name}</h2>
-        <p>Email: {profile.email}</p>
-        <p>College: {profile.college || "N/A"}</p>
-        <p>Interests: {profile.interests?.join(', ')}</p>
-        <p>Insights: {profile.insights}</p>
-
+      <h2 className="text-2xl font-bold mb-2">Welcome 🎓, {profile.firstName} {profile.lastName}</h2>
+     
+        
         
       </div>
     </>

@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  role: String, 
-  phone: String,
-  college: String,
-  interests: [String],
-  insights: String
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  dob: { type: Date },
+  gender: { type: String, enum: ['Male', 'Female', 'Other'] },
+  nationality: { type: String },
+  phone: { type: String },
+  email: { type: String, required: true, unique: true },
+  graduationYear: { type: String },
 });
 
 module.exports = mongoose.model('Student', studentSchema);
