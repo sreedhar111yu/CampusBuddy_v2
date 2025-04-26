@@ -7,6 +7,7 @@ import Navbar from '../Components/Navbar';
 function Home() {
 
   const [isOpen, setIsOpen] = useState(false);
+ 
 
   return (
     <>

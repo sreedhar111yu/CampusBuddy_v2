@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'; // For icons
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   
+  
 
   return (
     <nav className="fixed top-10 left-1/2 transform -translate-x-1/2 w-full max-w-4xl bg-gray-900 dark:bg-gray-900 shadow-md flex items-center justify-center py-4 z-50 px-4 transition-all duration-300">
@@ -50,19 +51,25 @@ const Navbar = () => {
           <button
   onClick={async () => {
     try {
-      const res = await fetch('http://localhost:5000/check-auth', {
-        credentials: 'include'
+      const res = await fetch('http://localhost:5000/auth/student/check-auth', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
       });
+
       const data = await res.json();
 
-      if (data.user) {
+      if (data.student) {
+        // Already authenticated
         window.location.href = '/dashboard/aspirants';
       } else {
-        window.location.href = 'http://localhost:5000/auth/student/google'; // <-- updated
+        // Not authenticated, redirect to Google OAuth
+        window.location.href = 'http://localhost:5000/auth/student/google';
       }
-    } catch (err) {
-      console.error('Auth check failed:', err);
-      window.location.href = 'http://localhost:5000/auth/student/google'; // <-- updated
+    } catch (error) {
+      console.error("Check-auth failed:", error);
+      window.location.href = 'http://localhost:5000/auth/student/google';
     }
   }}
   className='w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
@@ -70,12 +77,36 @@ const Navbar = () => {
   Aspirants
 </button>
 
-            <a
-              href="/dashboard/mentees"
-              className="w-full text-center block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              Mentees
-            </a>
+
+
+<button
+  onClick={async () => {
+    try {
+      const res = await fetch('http://localhost:5000/auth/mentee/check-auth', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      });
+
+      const data = await res.json();
+
+      if (data.student) {
+        // Already authenticated
+        window.location.href = '/dashboard/mentees';
+      } else {
+        // Not authenticated, redirect to Google OAuth
+        window.location.href = 'http://localhost:5000/auth/mentee/google';
+      }
+    } catch (error) {
+      console.error("Check-auth failed:", error);
+      window.location.href = 'http://localhost:5000/auth/mentee/google';
+    }
+  }}
+  className='w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+>
+  Mentees
+</button>
            
           </div>
         </div>

@@ -8,6 +8,8 @@ import Mentees from './Pages/Mentees';
 import Booking from './Pages/Booking';
 import Findpeople from './Pages/Findpeople';
 import Aprofile from './Pages/Aprofile';
+import Mprofile from './Pages/Mprofile';
+
 
 
 
@@ -27,6 +29,7 @@ function App() {
 <Route path="/dashboard/aspirants/findpeople" element={<Findpeople />} />
 <Route path="/dashboard/aspirants/profile" element={<Aprofile/>}/>
 <Route path="/dashboard/mentees" element={<Mentees />} />
+<Route path="/dashboard/mentees/profile" element={<Mprofile/>}/>
 
   
    </Routes>

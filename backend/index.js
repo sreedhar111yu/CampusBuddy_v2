@@ -8,7 +8,7 @@ const passport = require('passport');
 require('./middlewares/passportConfig');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const menteesRoutes = require('./routes/menteesRoutes')
+const menteesRoutes = require('./routes/menteesRoutes');
 const studentAuthRoutes = require('./routes/studentAuthRoutes')
 const menteesAuthRoutes =require('./routes/menteesAuthRoutes')
 
@@ -30,7 +30,7 @@ app.use(cors({
 
 app.use(express.json());
 
-
+app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -50,12 +50,21 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
+app.use((req, res, next) => {
+  console.log("🔍 [Session Debug]");
+  console.log("➡️ Path:", req.path);
+  console.log("🆔 Session ID:", req.sessionID);
+  console.log("📦 Session Data:", req.session);
+  console.log("👤 Authenticated User:", req.user);
+  next();
+});
+
 
 
 app.use('/auth/student', studentAuthRoutes);
 app.use('/auth/mentee', menteesAuthRoutes);
 app.use("/api/students", studentRoutes);
-// app.use('/api/mentees', menteesRoutes);
+app.use('/api/mentees', menteesRoutes);
 
 
 

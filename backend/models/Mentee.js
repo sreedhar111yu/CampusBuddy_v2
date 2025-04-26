@@ -1,21 +1,23 @@
 const mongoose = require('mongoose');
 
-const meenteesSchema = new mongoose.Schema({
+const menteesSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  college: { type: String, required: true },
-  department: { type: String, required: true },
-  phoneNo: { type: String, required: true },
-  gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
+  college: { type: String }, 
+  department: { type: String }, 
+  course:{type:String},
+
+  phoneNo: { type: String }, 
+  gender: { type: String, enum: ['Male', 'Female', 'Other'] }, 
   graduationYear: {
-    start: { type: Number, required: true },
-    end: { type: Number, required: true }
+    start: { type: Number },
+    end: { type: Number }
   },
-  role: { type: String, enum: ['student', 'passedout'], required: true },
-  insight: { type: String }
+  role: { type: String, enum: ['student', 'passedout'] }, 
+  insight: { type: String } 
 });
 
-const Meentee = mongoose.model('Meentee', meenteesSchema);
+const Mentee = mongoose.model('Mentee', menteesSchema);
 
-module.exports = Meentee;
+module.exports = Mentee;
