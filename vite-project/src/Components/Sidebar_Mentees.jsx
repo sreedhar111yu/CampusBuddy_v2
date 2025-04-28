@@ -1,8 +1,19 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { Home, Phone, Search, User, Gift, Calendar, } from "lucide-react";
+import axios from 'axios';
+import { Home, Phone, Search, User, Gift, Calendar,LogOut  } from "lucide-react";
 
 function sidebar_Mentees() {
+
+  const handleLogout = () => {
+    axios
+      .get('http://localhost:5000/auth/mentee/logout', { withCredentials: true })
+      .then(() => {
+        window.location.href = '/';
+      })
+      .catch(err => console.error('Logout failed:', err));
+  };
+
   return (
     
     <>
@@ -54,6 +65,12 @@ function sidebar_Mentees() {
             <Gift size={20} />
             Rewards
           </Link>
+          <button onClick={handleLogout}
+          className='flex w-full items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 text-red-500'
+          > 
+            <LogOut size={20} />
+            Logout
+          </button>
         </div>
       </div>
    </>

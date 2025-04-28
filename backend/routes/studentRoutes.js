@@ -1,14 +1,10 @@
+//studentRoutes.js
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const Student = require('../models/Student');
 
-// Middleware to protect routes
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.status(401).json({ isAuthenticated: false, message: 'User not authenticated' });
-}
-
-//  POST: Create Student (if needed manually)
+// POST: Create Student
 router.post('/', async (req, res) => {
   try {
     const student = await Student.create(req.body);
@@ -19,31 +15,46 @@ router.post('/', async (req, res) => {
 });
 
 // PUT: Update Student Info
-router.put('/:id', ensureAuthenticated, async (req, res) => {
-  try {
-    const updatedStudent = await Student.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+router.put(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
 
-    if (!updatedStudent) {
-      return res.status(404).json({ message: 'Student not found' });
+      if (!updatedStudent) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+
+      res.json(updatedStudent);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
-
-    res.json(updatedStudent);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
   }
-});
+);
 
-// ✅ GET: Authenticated User Details
-router.get('/me', (req, res) => {
-  if (!req.user) return res.status(401).json({ isAuthenticated: false, message: 'User not authenticated' });
-  res.json(req.user);
-});
+// GET: Authenticated User Full Details
+router.get(
+  '/me',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const student = await Student.findById(req.user._id);
 
-// ✅ GET: All Students (for admin use maybe)
+      if (!student) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+
+      res.json(student);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+// GET: All Students (for admin use maybe)
 router.get('/', async (req, res) => {
   try {
     const students = await Student.find();

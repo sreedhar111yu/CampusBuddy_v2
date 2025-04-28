@@ -61,7 +61,7 @@ const Navbar = () => {
       const data = await res.json();
 
       if (data.student) {
-        // Already authenticated
+        // Student is authenticated
         window.location.href = '/dashboard/aspirants';
       } else {
         // Not authenticated, redirect to Google OAuth
@@ -79,6 +79,7 @@ const Navbar = () => {
 
 
 
+
 <button
   onClick={async () => {
     try {
@@ -91,8 +92,8 @@ const Navbar = () => {
 
       const data = await res.json();
 
-      if (data.student) {
-        // Already authenticated
+      if (data.mentee) { // Make sure to check mentee status here
+        // Mentee is authenticated
         window.location.href = '/dashboard/mentees';
       } else {
         // Not authenticated, redirect to Google OAuth
@@ -107,6 +108,7 @@ const Navbar = () => {
 >
   Mentees
 </button>
+
            
           </div>
         </div>
