@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Home, Phone, Search, User, Gift, Calendar,LogOut  } from "lucide-react";
+import { Button } from './ui/button';
 
 function sidebar_Mentees() {
 
@@ -65,12 +66,12 @@ function sidebar_Mentees() {
             <Gift size={20} />
             Rewards
           </Link>
-          <button onClick={handleLogout}
+          <Button onClick={handleLogout}
           className='flex w-full items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 text-red-500'
           > 
             <LogOut size={20} />
             Logout
-          </button>
+          </Button>
         </div>
       </div>
    </>

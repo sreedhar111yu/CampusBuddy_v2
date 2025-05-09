@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Home, Phone, Search, User, Gift, LogOut } from "lucide-react";
 import axios from 'axios';
 
+
 function Sidebar_Aspirants() {
 
   const handleLogout = () => {
@@ -21,7 +22,6 @@ function Sidebar_Aspirants() {
             <Link to= "/">
             <div className="text-xl font-bold">CampusBuddy</div>
             </Link>
-          
         </div>
 
         <div className="space-y-4">
